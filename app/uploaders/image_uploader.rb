@@ -7,8 +7,15 @@ class ImageUploader < CarrierWave::Uploader::Base
   # include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
+  # We’ll store localhost images on our local computer and Heroku images on Amazon S3
+  if Rails.env.production?
+  # Heroku images on Amazon S3 
+  storage :fog
+  
+  else
+  # local computer storage  
   storage :file
-  # storage :fog
+  end
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
