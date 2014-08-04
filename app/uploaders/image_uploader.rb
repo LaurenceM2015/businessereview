@@ -4,7 +4,7 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
-  # include CarrierWave::MiniMagick
+  include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
   # We’ll store localhost images on our local computer and Heroku images on Amazon S3
@@ -32,7 +32,8 @@ class ImageUploader < CarrierWave::Uploader::Base
   # end
 
   # Process files as they are uploaded:
-  # process :scale => [200, 300]
+  #process :scale => [200, 300]
+  process :resize_to_fit => [200, 300]
   #
   # def scale(width, height)
   #   # do something
