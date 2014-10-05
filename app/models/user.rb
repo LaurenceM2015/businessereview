@@ -3,4 +3,9 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+         
+         #This dependent: :destroy just means that if a User is deleted, 
+         #all of the Reviews written by that User should be deleted as well           
+         
+         has_many :reviews, dependent: :destroy
 end
