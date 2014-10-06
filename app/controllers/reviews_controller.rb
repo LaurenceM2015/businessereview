@@ -1,5 +1,6 @@
 class ReviewsController < ApplicationController
   before_action :set_review, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /reviews
   # GET /reviews.json
@@ -25,6 +26,10 @@ class ReviewsController < ApplicationController
   # POST /reviews.json
   def create
     @review = Review.new(review_params)
+    @review.user_id = current_user.id
+    
+   # We should also make sure that there is indeed a user who is signed in. Otherwise, this current_user keyword will lead to an error. If we go back to the Devise documentation, we’ll see that we can use this ‘before_action’ line to authenticate our user and force them to sign in if they want to write a review. Let’s copy this, add it to the top of our Controller file.
+    
 
     respond_to do |format|
       if @review.save
