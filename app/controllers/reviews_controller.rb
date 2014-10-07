@@ -1,5 +1,6 @@
 class ReviewsController < ApplicationController
   before_action :set_review, only: [ :edit, :update, :destroy]
+  before_action :set_restaurant
   before_action :authenticate_user!
 
  
@@ -17,6 +18,7 @@ class ReviewsController < ApplicationController
   def create
     @review = Review.new(review_params)
     @review.user_id = current_user.id
+    @review.restaurant_id = @restaurant.id
     
    # We should also make sure that there is indeed a user who is signed in. Otherwise, this current_user keyword will lead to an error. If we go back to the Devise documentation, we’ll see that we can use this ‘before_action’ line to authenticate our user and force them to sign in if they want to write a review. Let’s copy this, add it to the top of our Controller file.
     
@@ -60,6 +62,12 @@ class ReviewsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_review
       @review = Review.find(params[:id])
+    end
+    
+    
+    # fot Restaurant
+    def set_restaurant
+        @restaurant = Restaurant.find(params[:restaurant_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
