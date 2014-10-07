@@ -1,5 +1,4 @@
 
-
 <!--the next line of code show the image to appear on top of page -->
 <%= image_tag @restaurant.image_url %>
 
@@ -24,8 +23,5 @@
 </p>
 
 <%= link_to "Write Review", new_restaurant_review_path(@restaurant), class: "btn btn-primary" %>
-
-
-
-<%= link_to 'Edit', edit_restaurant_path(@restaurant), class:"btn btn-link" %> |
-<%= link_to 'Back', restaurants_path, class:"btn btn-link" %>
+<%= link_to 'Edit', edit_restaurant_path(@restaurant), class: "btn btn-link" %> |
+<%= link_to 'Back', restaurants_path, class: "btn btn-link" %>
