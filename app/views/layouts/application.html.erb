@@ -19,7 +19,7 @@
 		
 		<% flash.each do |name, msg| %>
 		      <% if msg.is_a?(String) %>
-		        <div class="alert alert-<%= name == "notice" ? "success" : "danger" %> alert-dismissable"> <!-- If you’re using an earlier version of Rails, you’ll need to delete the quotes around ‘notice’ and add a colon in front. With this new code, let’s save and do one more thing. -->
+		        <div class="alert alert-<%= name == "notice" ? "success" : "danger" %> alert-dismissable"> 
 		          <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 		          <%= content_tag :div, msg, :id => "flash_#{name}" %>
 		        </div>

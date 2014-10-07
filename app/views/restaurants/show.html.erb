@@ -1,27 +1,46 @@
+<div class="row">
+	<div class="col-md-3"
+	
+	<!--the next line of code show the image to appear on top of page -->
+	<%= image_tag @restaurant.image_url %>
 
-<!--the next line of code show the image to appear on top of page -->
-<%= image_tag @restaurant.image_url %>
+	<h2>
+	  
+	  <%= @restaurant.name %>
+	</h2>
 
-<p>
-  <strong>Name:</strong>
-  <%= @restaurant.name %>
-</p>
+	<p>
+	  <strong>Address:</strong>
+	  <%= @restaurant.address %>
+	</p>
 
-<p>
-  <strong>Address:</strong>
-  <%= @restaurant.address %>
-</p>
+	<p>
+	  <strong>Phone:</strong>
+	  <%= @restaurant.phone %>
+	</p>
 
-<p>
-  <strong>Phone:</strong>
-  <%= @restaurant.phone %>
-</p>
+	<p>
+	  <strong>Website:</strong>
+	  <%= link_to @restaurant.website, @restaurant.website %>
+	</p>
 
-<p>
-  <strong>Website:</strong>
-  <%= @restaurant.website %>
-</p>
+	<%= link_to "Write a Review", new_restaurant_review_path(@restaurant), class: "btn btn-primary" %>
+	
+</div>
 
-<%= link_to "Write Review", new_restaurant_review_path(@restaurant), class: "btn btn-primary" %>
+<div class="col-md-9">
+	<% if @reviews.blank? %>
+	  <h3>No Reviews Yet. Be the first to write one!</h3>
+	<!-- This code cycles through each of the reviews and for each review, it displays the review’s rating as well as its comment in <p> tags.-->
+		<% else %>
+		
+		<% @reviews.each do |review| %>
+		  <p><%= review.rating %></p>
+		  <p><%= review.comment %></p>
+		<% end %>
+	<% end %>
+ </div>
+</div>
+
 <%= link_to 'Edit', edit_restaurant_path(@restaurant), class: "btn btn-link" %> |
 <%= link_to 'Back', restaurants_path, class: "btn btn-link" %>
