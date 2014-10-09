@@ -10,7 +10,14 @@ class RestaurantsController < ApplicationController
   # GET /restaurants/1
   # GET /restaurants/1.json
   def show
-    @reviews = Review.where(restaurant_id: @restaurant.id)
+    #under the Show action, we’ll take our definition of the @reviews variable, and tack on a       #order("created_at DESC"). This code just sorts the reviews to be ordered by when they were      #created, in descending order. Let’s save and take another look. Good, it’s now reversed.
+    
+    @reviews = Review.where(restaurant_id: @restaurant.id).order("created_at DESC")
+    if @reviews.blank?
+      @avg_rationg = 0
+    else
+    @avg_rating = @reviews.average(:rating).round(2)
+    end 
   end
 
   # GET /restaurants/new
