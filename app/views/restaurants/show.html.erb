@@ -1,12 +1,9 @@
 <div class="row">
 	<div class="col-md-3"
-	
 	<!--the next line of code show the image to appear on top of page -->
-	
 	<%= image_tag @restaurant.image_url %>
 
 	<h2>
-	  
 	  <%= @restaurant.name %>
 	</h2>
 
@@ -29,36 +26,46 @@
 	</p>
 
 	<%= link_to "Write a Review", new_restaurant_review_path(@restaurant), class: "btn btn-primary" %>
-	
 </div>
 
 <div class="col-md-9">
 	<% if @reviews.blank? %>
 	  <h3>No Reviews Yet. Be the first to write one!</h3>
 	<!-- This code cycles through each of the reviews and for each review, it displays the review’s rating as well as its comment in <p> tags.-->
-		<% else %>
-		
+	<% else %>
 		<table class="table">
-		    <tbody>
-				<% @reviews.each do |review| %>
-				<tr>
-					<td>
-			  		  <div class="star-rating" data-score= <%= review.rating %> ></div>
-			  		  
-					  <!--replace review.comment with h(review.comment).gsub(/\n/, '<br/>').html_safe. Here, gsub replaces any new line characters, which we see as breaks between paragraphs, into <br> tags. The h and .html_safe at the end are used to help our app display text as html.-->
-					  
-					  <p><%= h(review.comment).gsub(/\n/, '<br/>').html_safe %></p>
-				  </td>
-			  	</tr>
-			<% end %>
-		    </tbody>
-		</table>
-	<% end %>
+				<thead>
+					<tr>
+						<th class="col-md-3"></th>
+						<th class="col-md-9"></th>
+					</tr>
+				</thead>
+				
+				<tbody>		
+				 <% @reviews.each do |review| %>
+				 	<tr>
+						<td>
+							<h4>
+								<%= "#{review.user.first_name.capitalize} #{review.user.last_name.capitalize[0]}." %>
+							</h4>
+							<p><%= review.created_at.strftime("%-m/%-d/%y") %></p>
+						</td>
+						
+						<td>
+			  		  	  <div class="star-rating" data-score= <%= review.rating %> ></div>
+					  	  <p><%= h(review.comment).gsub(/\n/, '<br/>').html_safe %></p>
+				  		</td>
+			  		</tr>
+				 <% end %>
+		     </tbody>
+		 </table>
+	  <% end %>
+   </div>
  </div>
-</div>
 
-<%= link_to 'Edit', edit_restaurant_path(@restaurant), class: "btn btn-link" %> |
-<%= link_to 'Back', restaurants_path, class: "btn btn-link" %>
+    
+	<%= link_to 'Edit', edit_restaurant_path(@restaurant), class: "btn btn-link" %> |
+	<%= link_to 'Back', restaurants_path, class: "btn btn-link" %>
 
 <!--jquery-->
 <script>
