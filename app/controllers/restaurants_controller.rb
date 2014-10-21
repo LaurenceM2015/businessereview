@@ -1,8 +1,15 @@
 class RestaurantsController < ApplicationController
   before_action :set_restaurant, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!, except: [:index, :show]
-  before_action :check_user, except: [:index, :show]
-  
+  before_action :authenticate_user!, except: [:search, :index, :show]
+  before_action :check_user, except: [:search,  :index, :show]
+
+  def search
+    if params[:search].present?
+      @restaurants = Restaurant.search(params[:search])
+    else
+      @restaurants = Restaurant.all
+    end
+  end
 
   # GET /restaurants
   # GET /restaurants.json
@@ -13,14 +20,12 @@ class RestaurantsController < ApplicationController
   # GET /restaurants/1
   # GET /restaurants/1.json
   def show
-    #under the Show action, we’ll take our definition of the @reviews variable, and tack on a       #order("created_at DESC"). This code just sorts the reviews to be ordered by when they were      #created, in descending order. Let’s save and take another look. Good, it’s now reversed.
-    
     @reviews = Review.where(restaurant_id: @restaurant.id).order("created_at DESC")
     if @reviews.blank?
-      @avg_rationg = 0
+      @avg_rating = 0
     else
-    @avg_rating = @reviews.average(:rating).round(2)
-    end 
+      @avg_rating = @reviews.average(:rating).round(2)
+    end
   end
 
   # GET /restaurants/new
@@ -80,10 +85,10 @@ class RestaurantsController < ApplicationController
 
     def check_user
       unless current_user.admin?
-        redirect_to root_url, alert: "Sorry, only admins can do that"
-      end 
+        redirect_to root_url, alert: "Sorry, only admins can do that!"
+      end
     end
-    
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def restaurant_params
       params.require(:restaurant).permit(:name, :address, :phone, :website, :image)

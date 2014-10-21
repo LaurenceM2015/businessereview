@@ -1,19 +1,17 @@
 Rails.application.routes.draw do
-  #resources :reviews
 
   devise_for :users
   resources :restaurants do
-   resources :reviews, except: [:show, :index]
-  
- end
-    
+    collection do
+      get 'search'
+    end
+    resources :reviews, except: [:show, :index]
+  end
 
   get 'pages/about'
 
   get 'pages/contact'
-  
-  # Here i am adding up my index page
-  
+
   root 'restaurants#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
